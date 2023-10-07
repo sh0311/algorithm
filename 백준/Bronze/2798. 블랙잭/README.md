@@ -2,6 +2,8 @@
 
 [문제 링크](https://www.acmicpc.net/problem/2798) 
 
+고민 많이 한 문제. if li[i]+li[j]+li[k]>M: continue -> 이거 생각해내기 어려웠다. 처음에 if li[i]+li[j]+li[k]<M: 로 생각했다가 꼬여서 바꿈
+
 ### 성능 요약
 
 메모리: 31256 KB, 시간: 128 ms
