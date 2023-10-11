@@ -3,6 +3,8 @@
 [문제 링크](https://www.acmicpc.net/problem/10814) 
 
 구글링 이용해서 풂(sort, key=lambda 이용하기) li.sort(key=lambda x:int(x[0])
+sort를 나이에 대해서만 해주면 기입한 순서는 그대로 유지가 되므로 건드리지 않아도 된다!!!
+
 ### 성능 요약
 
 메모리: 54332 KB, 시간: 3984 ms
