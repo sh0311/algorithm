@@ -2,6 +2,7 @@
 
 [문제 링크](https://www.acmicpc.net/problem/10814) 
 
+구글링 이용해서 풂(sort, key=lambda 이용하기) li.sort(key=lambda x:int(x[0])
 ### 성능 요약
 
 메모리: 54332 KB, 시간: 3984 ms
