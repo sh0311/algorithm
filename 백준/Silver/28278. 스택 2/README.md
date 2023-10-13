@@ -2,6 +2,8 @@
 
 [문제 링크](https://www.acmicpc.net/problem/28278) 
 
+input()으로 받았더니 시간 초과 에러남! import sys한 후 sys.stdin.readline()으로 입력받아야 여러가지로 시간 아낄 수 있어 자주 사용하기!!
+
 ### 성능 요약
 
 메모리: 102856 KB, 시간: 884 ms
