@@ -1,24 +1,21 @@
-k, n = map(int, input().split())
-lan = []
-for _ in range(k):
-    lan.append(int(input()))
+K,N=map(int, input().split())
+li=[int(input()) for _ in range(K)]
+li.sort()
 
-start = 1
-end = max(lan)
-result = 0
+start=1
+end=max(li)
 
-while start <= end:
+result=0
+
+while start<=end:
     cnt = 0
-    mid = (start + end) // 2
-
-    for i in lan:
-        cnt += (i // mid)
-
-    if cnt >= n:
-        result = mid
-        start = mid + 1
-
+    mid=(start+end)//2
+    for l in li:
+        cnt+=(l//mid)
+    if cnt<N:
+        end=mid-1
     else:
-        end = mid - 1
-
+        result=mid
+        start=mid+1
 print(result)
+
