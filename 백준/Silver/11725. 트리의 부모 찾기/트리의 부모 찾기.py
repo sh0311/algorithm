@@ -1,6 +1,4 @@
-import sys
-sys.setrecursionlimit(10**6)
-
+from collections import deque
 N=int(input())
 graph=[[] for _ in range(N+1)]
 for _ in range(N-1):
@@ -10,14 +8,21 @@ for _ in range(N-1):
 
 parent=[None for _ in range(N+1)]
 visited=[0 for _ in range(N+1)]
-visited[1]=1
-def DFS(n,parent, visited):
-    for g in graph[n]:
-        if visited[g]==0:
-            parent[g]=n
-            visited[g]=1
-            DFS(g,parent, visited)
 
-DFS(1,parent, visited)
+def BFS(visited, parent, n):
+    deq=deque([n])
+    visited[n]=1
+    while deq:
+        v = deq.popleft()
+        for g in graph[v]:
+            if visited[g] == 0:
+                deq.append(g)
+                visited[g]=1
+                parent[g]=v
+
+BFS(visited, parent, 1)
 for i in range(2,N+1):
     print(parent[i])
+
+
+
