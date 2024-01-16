@@ -11,22 +11,15 @@ m1=li[0]
 m2=li[j]
 
 while i<j:
-    if li[i]+li[j]>0:
-        if m>abs(li[i]+li[j]):
-            m=abs(li[i]+li[j])
-            m1=li[i]
-            m2=li[j]
-        j-=1
-    elif li[i]+li[j]<0:
-        if m>abs(li[i]+li[j]):
-            m=abs(li[i]+li[j])
-            m1=li[i]
-            m2=li[j]
-        i+=1
-    else:
+    if m > abs(li[i] + li[j]):
         m = abs(li[i] + li[j])
         m1 = li[i]
         m2 = li[j]
+    if li[i]+li[j]>0:
+        j-=1
+    elif li[i]+li[j]<0:
+        i+=1
+    else:
         break
 
 
