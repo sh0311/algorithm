@@ -1,46 +1,54 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
-int bn(vector<int>& A,int target){
-    int start=0;
-    int end=A.size()-1;
+typedef pair<int, int> edge;
+vector<vector<edge>> vec;
+vector<bool> visited;
+static void BFS(int start);
+vector<int> dist;
 
-    while(start<=end){
-        int mid=(start+end)/2;
-        if(target==A[mid])
-            return 1;
-        else if(target<A[mid])
-            end=mid-1;
-        else
-            start=mid+1;
-    }
-    return 0;
-}
-int main(){
-
+int main() {
+    ios::sync_with_stdio(false);
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    int N;
-    cin>>N;
-    vector<int> A(N);
-    for(int i=0;i<N;i++){
+
+    int n;
+    cin>>n;
+    vector<int> A(n);
+    for(int i=0;i<n;i++){
         cin>>A[i];
     }
-    int M;
-    cin>>M;
+    sort(A.begin(), A.end());
 
+    int m;
+    cin>>m;
+    for(int i=0;i<m;i++) {
+        int val;
+        cin >> val;
+        int start=0;
+        int end=n-1;
+        int status=0;
+        while(start<=end){
+            int mid=(start+end)/2;
+            if(A[mid]>val){
+                end=mid-1;
+            }
+            else if (A[mid]<val){
+                start=mid+1;
+            }
+            else{
+                status=1;
+                break;
+            }
+        }
+        cout<<status<<'\n';
 
-    sort(A.begin(),A.end());
+    }
 
-    for(int i=0;i<M;i++){
-    int target;
-    cin>>target;
-    cout<<bn(A,target)<<'\n';}
-
-
-    return 0;
-}
+    }
 
