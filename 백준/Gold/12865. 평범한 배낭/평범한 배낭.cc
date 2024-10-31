@@ -1,47 +1,40 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <map>
 
 using namespace std;
 
+int sol(int k, vector<pair<int, int>>& bas, int n) {
+    vector<vector<int>> dp(n+1, vector<int>(k+1, 0));
 
-
-
-int knapsack(int N,int K,vector<int>& W,vector<int>& v){
-    vector<vector<int>> dp(N+1,vector<int>(K+1,0));
-    for(int i=1;i<=N;i++)
-        for(int w=1;w<=K;w++){
-            if (w-W[i-1]>=0){
-                dp[i][w]=max(dp[i-1][w],dp[i-1][w-W[i-1]]+v[i-1]);
-            }
-            else
-                dp[i][w]=dp[i-1][w];
+    for(int i=1;i<=n;i++) {
+        for(int j=0;j<bas[i].first;j++) {
+            dp[i][j]=dp[i-1][j];
         }
-    return dp[N][K];
+        for(int j=bas[i].first;j<=k;j++) {
+            dp[i][j]=max(dp[i-1][j], dp[i-1][j-bas[i].first]+bas[i].second);
+        }
+    }
+
+    return dp[n][k];
+
 }
 
-
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-    int N,K;
-    cin>>N>>K;
-    vector<int> w(N),v(N);
+    int n,k;
+    cin>>n>>k;
 
+    vector<pair<int, int>> bas(n+1);
 
-    for(int i=0;i<N;i++)
-        cin>>w[i]>>v[i];
+    for(int i=1;i<=n;i++) {
+        int w,v;
+        cin>>w>>v;
+        bas[i]=(make_pair(w,v));
+    }
 
-    cout<<knapsack(N,K,w,v)<<'\n';
-
-
-
-
-
-
+    cout<<sol(k, bas, n);
 
     return 0;
 }
-
