@@ -10,9 +10,6 @@ int cnt;
 int N;
 bool visited[100001]={false};
 
-int sol(int q) {
-    return value[q];
-}
 
 int depth(int R) {
 
@@ -61,8 +58,7 @@ int main() {
     for(int i=0;i<Q;i++) {
         int q;
         cin>>q;
-        int res=sol(q);
-        cout<<res<<'\n';
+        cout<<value[q]<<'\n';
     }
 
 
