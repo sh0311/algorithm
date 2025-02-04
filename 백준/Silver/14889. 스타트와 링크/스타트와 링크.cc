@@ -1,73 +1,85 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
-vector<vector<int>> graph;
-vector<bool> visited;
-int cnt;
+vector<vector<int>> s;
+vector<int> start;
+int cnt=0;
 int n;
-int min_val=99;
-vector<int> tmp;
+int visited[21]={false};
+//불가능한 최댓밗
+int sub=1000;
 
-
-void task() {
-    int tmp1_sum=0, tmp2_sum=0;
-
-    vector<int> tmp2;
-    //나머지 팀
-    for(int i=0;i<n;i++) {
-        if(!visited[i])
-            tmp2.push_back(i);
-    }
-
-    for(int i=0;i<tmp.size();i++) {
-        for(int j=i+1;j<tmp.size();j++) {
-            tmp1_sum+=graph[tmp[i]][tmp[j]]+graph[tmp[j]][tmp[i]];
+void count(){
+    vector<int> link;
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            link.push_back(i);
         }
     }
-    for(int i=0;i<tmp2.size();i++) {
-        for(int j=i+1;j<tmp2.size();j++) {
-            tmp2_sum+=graph[tmp2[i]][tmp2[j]]+graph[tmp2[j]][tmp2[i]];
+    //스타트 연산
+    int ssum=0;
+    for(int i=0;i<n/2;i++){
+        for(int j=i+1;j<n/2;j++){
+            ssum+=s[start[i]][start[j]]+s[start[j]][start[i]];
         }
     }
-
-    min_val=min(min_val,abs(tmp1_sum-tmp2_sum));
-
+    //링크 연산
+    
+    int lsum=0;
+    for(int i=0;i<n/2;i++){
+        for(int j=i+1;j<n/2;j++){
+            lsum+=s[link[i]][link[j]]+s[link[j]][link[i]];
+        }
+    }
+    //차이 구하기
+    sub=min(sub,abs(ssum-lsum));
 }
-void dfs(int start, int cnt) {
-    if(cnt==n/2) {
-        task();
+
+
+void dfs(int k, int cnt){
+    //탈출조건
+    if(cnt==n/2){
+        count();
         return;
     }
-    for(int i=start;i<n;i++) {
-        if(visited[i])
-            continue;
-        visited[i]=true;
-        tmp.push_back(i);
-        dfs(i+1,cnt+1);
+    for(int i=k;i<n;i++){
+        if(!visited[i]){
+            visited[i]=true;
+            start.push_back(i);
+        }
+        dfs(i+1, cnt+1);
+        start.pop_back();
         visited[i]=false;
-        tmp.pop_back();
     }
 }
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
 
+
+int main()
+{
     cin>>n;
-    graph.resize(n, vector<int>(n));
-    visited.resize(n);
-
-    for(int i=0;i<n;i++)
-        for(int j=0;j<n;j++) {
-            int val;
-            cin>>val;
-            graph[i][j]=val;
+    
+    s.resize(n, vector<int>(n));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>s[i][j];
         }
-
-
+    }
+    
     dfs(0,0);
+    cout<<sub;
 
-    cout<<min_val;
+    return 0;
 }
