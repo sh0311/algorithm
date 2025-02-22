@@ -1,61 +1,70 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <stack>
 #include <queue>
+#include <string>
+
+int dx[4]={0,1,0,-1}; //위오아왼
+int dy[4]={-1,0,1,0};
 
 using namespace std;
 
-static int graph[101][101];
-static int visited[101][101]={false};
-void BFS(int i, int j);
-static int dx[]={0,0,-1,1};
-static int dy[]={-1,1,0,0};
-static int n, m;
 
-int main() {
-    ios::sync_with_stdio(false);
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+int sol(vector<vector<int>> &graph, int n, int m){
+    vector<vector<bool>> visited(n,vector<bool>(m, false));
+    vector<vector<int>> res(n,vector<int>(m, 1e9));
+    
+    queue<pair<int,int>> q;
+    visited[0][0]=true;
+    q.push({0,0});  //x,y
+    res[0][0]=1;
 
-    cin>>n>>m;
-    for(int i=0;i<n;i++){
-        string s;
-        cin>>s;
-        for(int j=0;j<m;j++){
-            graph[i][j]=s[j]-'0';
+    
+    while(!q.empty()){
+        int x=q.front().first;
+        int y=q.front().second;
+        q.pop();
+        
+        for(int i=0;i<4;i++){
+            int nx=x+dx[i];
+            int ny=y+dy[i];
+            
+            if(nx>=0&&nx<m && ny>=0&&ny<n && !visited[ny][nx] && graph[ny][nx]==1){
+                visited[ny][nx]=true;
+                q.push({nx,ny});
+                res[ny][nx]=res[y][x]+1;
+            }
         }
     }
-    BFS(0,0);
-    cout<<graph[n-1][m-1];
-
+    return res[n-1][m-1];
 }
 
-
-void BFS(int i, int j){
-    queue<pair<int, int>> que;
-    que.push(make_pair(i,j));
-    while(!que.empty()){
-        int now[2];
-        now[0]=que.front().first;
-        now[1]=que.front().second;
-        que.pop();
-        visited[i][j]=true;
-        for(int k=0;k<4;k++){
-            int x=now[0]+dx[k];
-            int y= now[1]+dy[k];
-            if(x>=0&&y>=0&&x<n&&y<m){
-                if(!visited[x][y]&&graph[x][y]!=0){
-                    que.push(make_pair(x,y));
-                    graph[x][y]=graph[now[0]][now[1]]+1;
-                    visited[x][y]=true;
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    
+    vector<vector<int>> graph(n, vector<int>(m));
+    
+    for(int i=0;i<n;i++){
+            string s;
+            cin>>s;
+            for(int j=0;j<m;j++){
+                graph[i][j]=s[j]-'0';
             }
+        }
+    
+    int res=sol(graph, n, m);
+    cout<<res;
+    
 
-            }
-
-            }
-
-    }
+    return 0;
 }
-
-
